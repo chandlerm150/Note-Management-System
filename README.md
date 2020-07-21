@@ -8,7 +8,7 @@ Create an application that manages notes for phone calls. The application allows
 
 ## Requirements
  - Python 3.x
- - SQLite3
+ - sqlite3
  - Tkinter
  
  
