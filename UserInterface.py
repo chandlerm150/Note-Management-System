@@ -9,8 +9,11 @@ def loginScreen():
     # Creates window
     userPW = "1234"
     screen = Tk()
-    screen.geometry("250x225")
-    screen.title("Login")
+    w = 250
+    h = 250
+    x = int(midpointX - w/2)
+    y = int(midpointY - h/2)
+    screen.geometry("{}x{}+{}+{}".format(w,h,x,y))
     global username
     global username_entry
     username = StringVar()
@@ -50,7 +53,11 @@ def mainMenu(root):
     root.destroy()
     notes = notelist.getAllNotes()
     screen = Tk()
-    screen.geometry("600x500")
+    w = 600
+    h = 500
+    x = int(midpointX - w/2)
+    y = int(midpointY - h/2)
+    screen.geometry("{}x{}+{}+{}".format(w,h,x,y))
     screen.title("Main Menu")
 
     ##Create listbox add all note entries to it
@@ -77,7 +84,7 @@ def mainMenu(root):
     Label(screen, text=" ").pack(anchor='n')
 
     ##Create buttons. Each button hands control to the function specified in it's 'command' argument when pressed.
-    Button(screen, text= "View selected note", width=20,height =1, pady=5,command = partial(getAnchor,screen)).pack(anchor='n')
+    Button(screen, text= "View selected note", width=20,height =1, pady=5,command = partial(viewActiveNote,screen)).pack(anchor='n')
     Label(screen, text=" ").pack(anchor='n')
     Button(screen, text="Create new note", width=20, height=1, pady=5,padx = 2, command=partial(createNote,screen)).pack(side=LEFT)
     Button(screen, text="Add Employee",  width=20, height=1, pady=5,padx = 2, command=partial(addEmployee,screen)).pack(side=LEFT)
@@ -88,13 +95,18 @@ def mainMenu(root):
     screen.update_idletasks()
     screen.mainloop()
 
+# View the details of the selected completed note
 def viewCompleted(root):
     #Create window
     root.destroy()
     notes = notelist.getAllNotes()
     screen = Tk()
     screen.title("Completed Notes")
-    screen.geometry("600x475")
+    w = 600
+    h = 500
+    x = int(midpointX - w/2)
+    y = int(midpointY - h/2)
+    screen.geometry("{}x{}+{}+{}".format(w,h,x,y))
 
     ##Create listbox add all completed notes to it
     global listbox
@@ -123,6 +135,7 @@ def viewCompleted(root):
     screen.update_idletasks()
     screen.mainloop()
 
+#Formats the string to fit the Tkinter listbox
 def formatText(StudentName, sID, nID):
     s = "                                                                                                              "
     s = s[:2] + str(StudentName) + s[2:]
@@ -130,7 +143,8 @@ def formatText(StudentName, sID, nID):
     s = s[:35] + str(nID) + s[35:]
     return(s)
 
-def getAnchor(root):
+# View the details of the selected active note
+def viewActiveNote(root):
     try:
         line = listbox.get(ANCHOR)
         root.destroy()
@@ -147,7 +161,12 @@ def getAnchor(root):
 
         #Create window and listbox to display note details
         screen = Tk()
-        screen.geometry("800x400")
+        w = 800
+        h = 400
+        x = int(midpointX - w / 2)
+        y = int(midpointY - h / 2)
+        screen.geometry("{}x{}+{}+{}".format(w, h, x, y))
+
         screen.title("View Note")
         Label(screen, font=('arial',14,'bold'), pady=30, text="Student Note Details").pack(anchor='n')
         listbox2 = Listbox(screen, borderwidth=5,fg = 'black', font='Courier', relief='groove', selectbackground='lightgrey', height=12,width=80)
@@ -175,57 +194,18 @@ def getAnchor(root):
 
     except Exception:
         screen = Tk()
-        screen.geometry("250x50")
+        w = 250
+        h = 50
+        x = int(midpointX - w / 2)
+        y = int(midpointY - h / 2)
+        screen.geometry("{}x{}+{}+{}".format(w, h, x, y))
         Label(screen, text="Error: Please select a note!\n", fg='red',
               font=('arial', 12, 'bold')).pack(anchor='w')
 
         filler = Tk()
-
         mainMenu(filler)
 
 
-## View note page
-def viewNote(noteID):
-
-    theNote = notelist.getNote(noteID)
-    statusNum = theNote.status
-    dateString = theNote.createdDate
-
-    if(statusNum==0):
-        status = "Incomplete"
-    else:
-        status = "Complete"
-
-    theStudent = notelist.getStudentInfo(theNote.sID)
-    theEmployee = notelist.getEmpInfo(theNote.eID)
-
-    #Create window and note details
-    screen = Tk()
-    screen.geometry("800x400")
-    screen.title("View Note")
-    Label(screen, font=('arial',14,'bold'), pady=30, text="Student Note Details").pack(anchor='n')
-    listbox = Listbox(screen, borderwidth=5,fg = 'black', font='Courier', relief='groove', selectbackground='lightgrey', height=12,width=80)
-    listbox.insert(END, "Student first name:   " + theStudent.firstname)
-    listbox.insert(END, "Student last:         " + theStudent.lastname)
-    listbox.insert(END, "Student ID:           " + str(theStudent.sID))
-    listbox.insert(END, "Student phone:        " + str(theStudent.phonenumber))
-    listbox.insert(END, "Student address:      " + theStudent.address)
-    listbox.insert(END, "Note ID:              " + str(theNote.noteID))
-    listbox.insert(END, "Reason for note:      " + theNote.reason)
-    listbox.insert(END, "Additional notes:     " + theNote.note)
-    listbox.insert(END, "Note is for:          " + theNote.forWho)
-    listbox.insert(END, "Note made by:         " + theEmployee.firstname + " " + theEmployee.lastname)
-    listbox.insert(END, "Employee ID:          " + str(theNote.eID))
-    listbox.insert(END, "Date created:         " + dateString)
-    #listbox.insert(END, "Date completed:       ")
-    listbox.insert(END, "Status:               " + status )
-    listbox.pack(anchor='n')
-
-    #Create buttons
-    b1 = Button(screen, text='   Go Back   ',command = partial(mainMenu, screen))
-    b1.pack(side=RIGHT, padx=5, pady=5)
-    b2 = Button(screen, text='    Mark as complete    ', command = partial(markComplete,screen,theNote))
-    b2.pack(side=RIGHT, padx=5, pady=5)
 
 ##Retrieves the Tkinter object that contains the user selected line from the "View completed notes" page
 def getCompletedAnchor(root):
@@ -251,7 +231,11 @@ def createNote(root):
 
     root.destroy()
     screen = Tk()
-    screen.geometry("400x250")
+    w = 400
+    h = 250
+    x = int(midpointX - w/2)
+    y = int(midpointY - h/2)
+    screen.geometry("{}x{}+{}+{}".format(w,h,x,y))
     screen.title("Create Note")
     fields = ('Student ID', 'For Who', 'Reason', 'Notes', 'Employee ID')
     for field in fields:
@@ -278,7 +262,11 @@ def addEmployee(root):
     root.destroy()
 
     screen = Tk()
-    screen.geometry("400x150")
+    w = 400
+    h = 150
+    x = int(midpointX - w/2)
+    y = int(midpointY - h/2)
+    screen.geometry("{}x{}+{}+{}".format(w,h,x,y))
     fields = ("Employee ID", "First Name", "Last Name")
     screen.title("Add Employee")
 
@@ -306,7 +294,11 @@ def addStudent(root):
     root.destroy()
 
     screen = Tk()
-    screen.geometry("400x250")
+    w = 400
+    h = 250
+    x = int(midpointX - w/2)
+    y = int(midpointY - h/2)
+    screen.geometry("{}x{}+{}+{}".format(w,h,x,y))
     screen.title("Add Student")
     fields = ("Student ID", "First Name", "Last Name", "Address", "Phone Number")
     for field in fields:
@@ -354,7 +346,6 @@ def clearStudentEntries():
 # Retrieve the values contained in Tkinter entries and attempt to add them to DB
 def processEntries():
     vals = []
-
     for e in entries:
         vals.append(e.get())
 
@@ -405,9 +396,9 @@ def viewCompletedNote(noteID):
 
 #Changes the status of the selected note to complete
 def markComplete(root, note):
-    root.destroy()
+    #root.destroy()
     notelist.markAsComplete(note)
-    viewNote(note.noteID)
+    mainMenu(root)
 
 ##Create global variables
 def createGlobals():
@@ -416,6 +407,13 @@ def createGlobals():
     global username
     global notelist
     notelist = NoteList.NoteList()
+    global midpointX
+    global midpointY
+    root = Tk()
+    midpointX = root.winfo_screenwidth() / 2
+    midpointY = root.winfo_screenheight() / 2
+    root.destroy()
+
 
 createGlobals()
 loginScreen()

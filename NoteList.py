@@ -35,7 +35,11 @@ class NoteList:
         # Checks to make sure student ID and employee ID are integers
         if (not (self.isInteger(vals[0]) and self.isInteger(vals[4]))):
             screen = Tk()
-            screen.geometry("350x100")
+            w = 400
+            h = 50
+            x = int(800)
+            y = int(400)
+            screen.geometry("{}x{}+{}+{}".format(w, h, x, y))
             Label(screen, text="Error: Please enter the ID as an integer!\n", fg='red',
                   font=('arial', 12, 'bold')).pack(anchor='w')
             return
@@ -57,13 +61,21 @@ class NoteList:
                 cursor.execute(sqlFormula, noteValues)
                 database.commit()
                 screen = Tk()
-                screen.geometry("350x100")
+                w = 300
+                h = 50
+                x = int(800)
+                y = int(400)
+                screen.geometry("{}x{}+{}+{}".format(w, h, x, y))
                 Label(screen, text="Note successfully added!\n", fg='green', font=('arial', 12, 'bold')).pack(
                     anchor='w')
 
             except:
                 screen = Tk()
-                screen.geometry("350x100")
+                w = 350
+                h = 50
+                x = int(800)
+                y = int(400)
+                screen.geometry("{}x{}+{}+{}".format(w, h, x, y))
                 Label(screen, text="Database exception: Unable to add note!\n", fg='red',
                       font=('arial', 12, 'bold')).pack(
                     anchor='w')
@@ -71,7 +83,11 @@ class NoteList:
                 database.close()
         else:
             screen = Tk()
-            screen.geometry("350x100")
+            w = 350
+            h = 125
+            x = int(800)
+            y = int(400)
+            screen.geometry("{}x{}+{}+{}".format(w, h, x, y))
             if (not sExists):
                 Label(screen, text="Error: Invalid student ID, please try again!\n", fg='red',
                       font=('arial', 12, 'bold')).pack(anchor='w')
@@ -87,7 +103,11 @@ class NoteList:
 
         if (not validID):
             screen = Tk()
-            screen.geometry("450x75")
+            w = 450
+            h = 75
+            x = 800
+            y = 400
+            screen.geometry("{}x{}+{}+{}".format(w, h, x, y))
             Label(screen, text="Error: Invalid Employee ID, please enter an integer!\n", fg='red',
                   font=('arial', 12, 'bold')).pack(anchor='w')
             return
@@ -100,12 +120,20 @@ class NoteList:
             cursor.execute(sqlFormula, empValues)
             database.commit()
             screen = Tk()
-            screen.geometry("350x100")
+            w = 350
+            h = 100
+            x = 800
+            y = 400
+            screen.geometry("{}x{}+{}+{}".format(w, h, x, y))
             Label(screen, text="Employee successfully added!\n", fg='green', font=('arial', 12, 'bold')).pack(
                 anchor='w')
         except:
             screen = Tk()
-            screen.geometry("450x75")
+            w = 450
+            h = 75
+            x = 800
+            y = 400
+            screen.geometry("{}x{}+{}+{}".format(w, h, x, y))
             Label(screen, text="Error: That ID already exists!\n", fg='red',
                   font=('arial', 12, 'bold')).pack(anchor='w')
         finally:
@@ -119,7 +147,11 @@ class NoteList:
 
         if (not validID):
             screen = Tk()
-            screen.geometry("450x75")
+            w = 450
+            h = 75
+            x = 800
+            y = 400
+            screen.geometry("{}x{}+{}+{}".format(w, h, x, y))
             Label(screen, text="Error: Invalid Employee ID, please enter an integer!\n", fg='red',
                   font=('arial', 12, 'bold')).pack(anchor='w')
             return
@@ -132,13 +164,21 @@ class NoteList:
             cursor.execute(sqlFormula, stuValues)
             database.commit()
             screen = Tk()
-            screen.geometry("350x100")
+            w = 350
+            h = 100
+            x = 800
+            y = 400
+            screen.geometry("{}x{}+{}+{}".format(w, h, x, y))
             Label(screen, text="Student successfully added!\n", fg='green', font=('arial', 12, 'bold')).pack(
                 anchor='w')
 
         except:
             screen = Tk()
-            screen.geometry("450x75")
+            w = 450
+            h = 75
+            x = 800
+            y = 400
+            screen.geometry("{}x{}+{}+{}".format(w, h, x, y))
             Label(screen, text="Error: That ID already exists!\n", fg='red',
                   font=('arial', 12, 'bold')).pack(anchor='w')
         finally:
@@ -155,7 +195,11 @@ class NoteList:
             cursor.execute(sqlFormula)
             database.commit()
             screen = Tk()
-            screen.geometry("200x50")
+            w = 200
+            h = 50
+            x = int(800)
+            y = int(400)
+            screen.geometry("{}x{}+{}+{}".format(w, h, x, y))
             Label(screen, text="Note completed!\n", fg='green', font=('arial', 12, 'bold')).pack(
                 anchor='w')
         except:
