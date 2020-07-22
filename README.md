@@ -11,4 +11,10 @@ Create an application that manages notes for phone calls. The application allows
  - sqlite3
  - Tkinter
  
+## How to run program: 
+Install the above packages and run UserInterface.py in Python. The noteDB file contains the sqlite database and is already instantiated with a few instances of students, mployees, and notes. Use any username at the login promt and the password is simply 1234. For creating new notes, the valid employee ID numbers are 999, 888, and 777. Valid student ID numbers are 111, 222, and 333. Alternatively, you can add new students and employees to the database from the GUI, and then use those IDs to create a new note. When adding a new student or employee to the database, the ID numbers will be checked for duplicates before adding them to ensure unique IDs. 
+ 
+ 
+ ## Demo
+![](NoteSystemDemo.gif)
  
